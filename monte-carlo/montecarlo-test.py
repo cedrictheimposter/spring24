@@ -83,6 +83,7 @@ class Funktion():
 
 
     '''Kanske ha en basic-plot funktion utanför klassen som klassmetoden använder'''
+    '''hade kunnat ändra så att scatter/continuous är ett attribut och så behövs bara en plotfunktion'''
     def plotta(self):
         plt.figure(figsize=(8,8))
         plt.plot(self.X,self.Y,c="b")
