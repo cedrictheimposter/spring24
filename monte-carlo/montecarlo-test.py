@@ -26,7 +26,8 @@ class Funktion():
                           "sine":self.sine, 
                           "e^-x":self.inv_exponential, 
                           "half circle":self.upper_halfcircle,
-                          "slumpa":self.slumpa}
+                          "slumpa":self.slumpa,
+                          "param circle":self.param_circle}
         self.function = self.functions[self.func_name]
 
     def def_func(self, func):
@@ -43,6 +44,9 @@ class Funktion():
     def do_scatter(self,y1,y2,n):
         self.scattered = 1
         self.function(y1,y2,n)
+
+    def do_circle(self,mid_point,r,n):
+        self.function(mid_point,r,n)
 
     def add_params(self,params):
         '''Here params are taken in as list'''
@@ -66,6 +70,18 @@ class Funktion():
 
     def upper_halfcircle(self,x):
         return math.sqrt(1-x**2)
+    
+    def param_circle(self,mid_point,r,n):
+        self.X = list()
+        self.Y = list()#{x:None for x in self.X}
+        self.map = {}
+        for i in range(n):
+            x = mid_point[0] + r*math.cos(2*math.pi*i/n) 
+            y = mid_point[1] + r*math.sin(2*math.pi*i/n)
+            self.X.append(x)
+            self.Y.append(y)
+            self.map[x] = y
+
 
     '''This became a bit to incompatible with the rst of the class, with do-method
         redefining X,Y and map
@@ -166,12 +182,16 @@ def main():
     #scatt.do_scatter(-1,1,n)
     #scatt.punkt_plotta()
 
-    f = Funktion(a,b,"half circle")
+    #f = Funktion(a,b,"half circle")
     #f.def_func()
-    f.exec()
+    #f.exec()
     #f.plotta()
+    #montecarlo(a,b,n,f)
 
-    montecarlo(a,b,n,f)
+    circle = Funktion(a,b,"param circle")
+    circle.do_circle([0,0],1,n)
+    circle.plotta()
+    montecarlo(a,b,n,circle)
 
 main()
 
