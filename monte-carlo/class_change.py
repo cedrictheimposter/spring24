@@ -25,6 +25,7 @@ class Funktion():
                           "slumpa":self.slumpa}
         self.function = self.functions[self.func_name]
 
+    '''Executive methods'''
     def def_func(self, func):
         self.func_name = func
         self.function = self.functions[self.func_name]
@@ -40,6 +41,7 @@ class Funktion():
         self.scattered = 1
         self.function(y1,y2,n)
 
+    '''Specifying methods'''
     def add_params(self,params):
         '''Here params are taken in as list'''
         pass
@@ -48,6 +50,7 @@ class Funktion():
         '''allows user to put in params manually'''
         pass
 
+    '''Functiion methods – Elementary functions'''
     def squared(self,x):
         return x**2
 
@@ -63,6 +66,8 @@ class Funktion():
     def upper_halfcircle(self,x):
         return math.sqrt(1-x**2)
 
+
+    '''Function methods '''
     '''This became a bit to incompatible with the rst of the class, with do-method
         redefining X,Y and map
         and to have to have another plot function
