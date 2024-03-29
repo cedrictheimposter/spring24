@@ -17,6 +17,7 @@ class Funktion():
         self.X = np.linspace(start,slut,self.resolution)
         self.map = {x:None for x in self.X}
         self.Y = self.map.values()
+        self.scattered = 0
 
         self.func_name = func_name
         self.functions = {"":None, 
@@ -40,6 +41,7 @@ class Funktion():
         self.Y = self.map.values()
     
     def do_scatter(self,y1,y2,n):
+        self.scattered = 1
         self.function(y1,y2,n)
 
     def add_params(self,params):
@@ -85,16 +87,11 @@ class Funktion():
     '''Kanske ha en basic-plot funktion utanför klassen som klassmetoden använder'''
     '''hade kunnat ändra så att scatter/continuous är ett attribut och så behövs bara en plotfunktion'''
     def plotta(self):
-        plt.figure(figsize=(8,8))
+        if self.scattered == 1:
+            plt.scatter(self.X,self.Y,c="b")
+        else:
+            plt.figure(figsize=(8,8))
         plt.plot(self.X,self.Y,c="b")
-        plt.xlabel('X')
-        plt.ylabel('Y')
-        plt.title(self.namn)
-        plt.show()
-
-    def punkt_plotta(self):
-        plt.figure(figsize=(8,8))
-        plt.scatter(self.X,self.Y,c="b")
         plt.xlabel('X')
         plt.ylabel('Y')
         plt.title(self.namn)
