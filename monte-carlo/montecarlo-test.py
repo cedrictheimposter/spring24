@@ -18,6 +18,7 @@ class Funktion():
         self.map = {x:None for x in self.X}
         self.Y = self.map.values()
         self.scattered = 0
+        self.closedcurve = 0
 
         self.func_name = func_name
         self.functions = {"":None, 
@@ -30,6 +31,7 @@ class Funktion():
                           "param circle":self.param_circle}
         self.function = self.functions[self.func_name]
 
+    '''Executive methods'''
     def def_func(self, func):
         self.func_name = func
         self.function = self.functions[self.func_name]
@@ -46,8 +48,10 @@ class Funktion():
         self.function(y1,y2,n)
 
     def do_circle(self,mid_point,r,n):
+        self.closedcurve = 1
         self.function(mid_point,r,n)
 
+    '''Specifying methods'''
     def add_params(self,params):
         '''Here params are taken in as list'''
         pass
@@ -56,6 +60,7 @@ class Funktion():
         '''allows user to put in params manually'''
         pass
 
+    '''Function methods: elementary functions'''
     def squared(self,x):
         return x**2
 
@@ -71,6 +76,7 @@ class Funktion():
     def upper_halfcircle(self,x):
         return math.sqrt(1-x**2)
     
+    '''Function methods: parametric functions'''
     def param_circle(self,mid_point,r,n):
         self.X = list()
         self.Y = list()#{x:None for x in self.X}
@@ -83,6 +89,7 @@ class Funktion():
             self.map[x] = y
 
 
+    '''Functions methods: discrete functions'''
     '''This became a bit to incompatible with the rst of the class, with do-method
         redefining X,Y and map
         and to have to have another plot function
@@ -100,6 +107,7 @@ class Funktion():
             self.map[random_x] = random_y
 
 
+    '''Output methods'''
     '''Kanske ha en basic-plot funktion utanför klassen som klassmetoden använder'''
     '''hade kunnat ändra så att scatter/continuous är ett attribut och så behövs bara en plotfunktion'''
     def plotta(self):
@@ -173,6 +181,10 @@ def montecarlo(a,b,n,funktion):
     plt.show()
 
     return estimated_integral,inner_points
+
+def montecarlo_cc(a,b,n,funktion):
+    pass
+
 
 def main():
     a,b = -1,1
