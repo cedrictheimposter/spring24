@@ -2,8 +2,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import math
 import random
+'''Todo: '''
+'''Fill in closed curve montecarlo method
+    Clean up a bit in the program (text, functionality)
+    Add possibility of paramaters
+    Seperate files'''
 
-'''Add possibility of paramaters'''
 '''Now, either function name is given at conception, and exec command is needed'''
 '''If function name is given later, exec is not needed but is done at naming'''
 '''Current functions available: 
@@ -182,8 +186,38 @@ def montecarlo(a,b,n,funktion):
 
     return estimated_integral,inner_points
 
+'''How this will work'''
 def montecarlo_cc(a,b,n,funktion):
-    pass
+    y_min = min(funktion.Y)
+    y_max = max(funktion.Y)
+    space_area = (b-a)*(y_max-y_min)
+
+    '''Previous code, which is probably better to use in this case'''
+    randoms = Funktion(a,b,"slumpa")
+    randoms.do_scatter(y_min,y_max,n)
+
+    inside = 0
+
+    inner_points = 0
+    under_points = dict()
+    over_points = dict()
+    for i in range(n):
+        closest_x = closest(randoms.X[i],funktion.X)
+        curve_y = funktion.map[closest_x]
+        if abs(randoms.Y[i])<=abs(curve_y):
+            if (curve_y >= 0 and randoms.Y[i] >= 0) or (curve_y <= 0 and randoms.Y[i] <= 0):
+                inner_points += 1
+                under_points[randoms.X[i]] = randoms.Y[i]
+            else:
+                over_points[randoms.X[i]] = randoms.Y[i]
+        else:
+            over_points[randoms.X[i]] = randoms.Y[i]
+    
+    estimated_integral = space_area*(inner_points/n)
+
+    print("out of ",n," points, ", inner_points, "were found under the curve.")
+    print("\n the integral was approximated to be ",estimated_integral)
+
 
 
 def main():
